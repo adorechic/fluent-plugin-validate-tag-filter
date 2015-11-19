@@ -1,11 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'fluent/plugin/validate/tag/filter/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-validate-tag-filter"
-  spec.version       = Fluent::Plugin::Validate::Tag::Filter::VERSION
+  spec.version       = "0.0.1"
   spec.authors       = ["adorechic"]
   spec.email         = ["adorechic@gmail.com"]
 
