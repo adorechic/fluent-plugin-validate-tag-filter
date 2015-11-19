@@ -1,8 +1,7 @@
-# Fluent::Plugin::Validate::Tag::Filter
+# fluent-plugin-validate-tag-filter
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/fluent/plugin/validate/tag/filter`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This plugin validates queue tags and filter them.
+Passes through valid one, deletes invalid one.
 
 ## Installation
 
@@ -22,7 +21,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```xml
+<filter test.**>
+  type validate_tag
+  max_length 120
+  pattern \Atest.[a-z]+.baz\z
+</filter>
+```
 
 ## Development
 
@@ -38,4 +43,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
