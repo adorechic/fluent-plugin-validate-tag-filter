@@ -21,4 +21,18 @@ class ValidateTagFilterTest < Test::Unit::TestCase
 
     assert_equal({ "foo" => 1 }, d.filtered_as_array[0][2])
   end
+
+  def test_max_length
+    d = create_driver(conf: 'max_length 5', tag: 'abcde')
+    d.run do
+      d.filter("foo" => 1)
+    end
+    assert_equal({ "foo" => 1 }, d.filtered_as_array[0][2])
+
+    d = create_driver(conf: 'max_length 5', tag: 'abcdef')
+    d.run do
+      d.filter("foo" => 1)
+    end
+    assert_equal([], d.filtered_as_array)
+  end
 end
