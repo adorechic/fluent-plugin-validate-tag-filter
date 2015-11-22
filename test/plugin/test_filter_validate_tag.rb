@@ -14,36 +14,31 @@ class ValidateTagFilterTest < Test::Unit::TestCase
   end
 
   def test_valid_queue
-    d = create_driver
-    d.run do
-      d.filter("foo" => 1)
-    end
-
-    assert_equal({ "foo" => 1 }, d.filtered_as_array[0][2])
+    assert_allow_tag
   end
 
   def test_max_length
-    d = create_driver(conf: 'max_length 5', tag: 'abcde')
-    d.run do
-      d.filter("foo" => 1)
-    end
-    assert_equal({ "foo" => 1 }, d.filtered_as_array[0][2])
-
-    d = create_driver(conf: 'max_length 5', tag: 'abcdef')
-    d.run do
-      d.filter("foo" => 1)
-    end
-    assert_equal([], d.filtered_as_array)
+    assert_allow_tag(conf: 'max_length 5', tag: 'abcde')
+    assert_deny_tag(conf: 'max_length 5', tag: 'abcdef')
   end
 
   def test_pattern
-    d = create_driver(conf: 'pattern \Atest.[0-9].bar\z', tag: 'test.0.bar')
+    assert_allow_tag(conf: 'pattern \Atest.[0-9].bar\z', tag: 'test.0.bar')
+    assert_deny_tag(conf: 'pattern \Atest.[0-9].bar\z', tag: 'test.hoge.bar')
+  end
+
+  private
+
+  def assert_allow_tag(conf: '', tag: 'test')
+    d = create_driver(conf: conf, tag: tag)
     d.run do
       d.filter("foo" => 1)
     end
     assert_equal({ "foo" => 1 }, d.filtered_as_array[0][2])
+  end
 
-    d = create_driver(conf: 'pattern \Atest.[0-9].bar\z', tag: 'test.hoge.bar')
+  def assert_deny_tag(conf: '', tag: 'test')
+    d = create_driver(conf: conf, tag: tag)
     d.run do
       d.filter("foo" => 1)
     end
