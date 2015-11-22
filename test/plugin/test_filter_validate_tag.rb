@@ -35,4 +35,18 @@ class ValidateTagFilterTest < Test::Unit::TestCase
     end
     assert_equal([], d.filtered_as_array)
   end
+
+  def test_pattern
+    d = create_driver(conf: 'pattern \Atest.[0-9].bar\z', tag: 'test.0.bar')
+    d.run do
+      d.filter("foo" => 1)
+    end
+    assert_equal({ "foo" => 1 }, d.filtered_as_array[0][2])
+
+    d = create_driver(conf: 'pattern \Atest.[0-9].bar\z', tag: 'test.hoge.bar')
+    d.run do
+      d.filter("foo" => 1)
+    end
+    assert_equal([], d.filtered_as_array)
+  end
 end
