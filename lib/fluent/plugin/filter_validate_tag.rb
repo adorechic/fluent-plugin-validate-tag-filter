@@ -13,13 +13,14 @@ module Fluent
     end
 
     def filter(tag, time, record)
-      return nil if tag.size > @max_length
-
-      if @pattern && @pattern !~ tag
-        return nil
+      case
+      when tag.size > @max_length
+        nil
+      when @pattern && @pattern !~ tag
+        nil
+      else
+        record
       end
-
-      record
     end
   end
 end
