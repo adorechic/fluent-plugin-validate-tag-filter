@@ -2,7 +2,7 @@ module Fluent
   class ValidateTagFilter < Filter
     Plugin.register_filter('validate_tag', self)
 
-    config_param :max_length, :integer, default: 200
+    config_param :max_length, :integer, default: nil
 
     def configure(conf)
       super
@@ -17,7 +17,7 @@ module Fluent
 
     def filter(tag, time, record)
       case
-      when tag.size > @max_length
+      when @max_length && tag.size > @max_length
         nil
       when !@regexps.empty? && @regexps.any? {|regexp| regexp !~ tag }
         nil

@@ -20,6 +20,7 @@ class ValidateTagFilterTest < Test::Unit::TestCase
   def test_max_length
     assert_allow_tag(conf: 'max_length 5', tag: 'abcde')
     assert_deny_tag(conf: 'max_length 5', tag: 'abcdef')
+    assert_allow_tag(conf: '', tag: 'a' * 250)
   end
 
   def test_regexp
