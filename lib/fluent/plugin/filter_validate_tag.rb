@@ -7,8 +7,11 @@ module Fluent
     def configure(conf)
       super
 
-      if conf['pattern']
-        @pattern = Regexp.new(conf['pattern'])
+      @regexps = []
+      conf.each do |key, value|
+        if key =~ /\Aregexp[0-9]+\z/
+          @regexps << Regexp.new(value)
+        end
       end
     end
 
@@ -16,7 +19,7 @@ module Fluent
       case
       when tag.size > @max_length
         nil
-      when @pattern && @pattern !~ tag
+      when !@regexps.empty? && @regexps.any? {|regexp| regexp !~ tag }
         nil
       else
         record

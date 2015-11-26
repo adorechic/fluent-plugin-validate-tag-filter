@@ -22,9 +22,12 @@ class ValidateTagFilterTest < Test::Unit::TestCase
     assert_deny_tag(conf: 'max_length 5', tag: 'abcdef')
   end
 
-  def test_pattern
-    assert_allow_tag(conf: 'pattern \Atest.[0-9].bar\z', tag: 'test.0.bar')
-    assert_deny_tag(conf: 'pattern \Atest.[0-9].bar\z', tag: 'test.hoge.bar')
+  def test_regexp
+    assert_allow_tag(conf: 'regexp1 \Atest.[0-9]{1,3}.bar\z', tag: 'test.0.bar')
+    assert_deny_tag(conf: 'regexp1 \Atest.[0-9]{1,3}.bar\z', tag: 'test.0000.bar')
+    assert_deny_tag(conf: 'regexp1 \Atest.[0-9]{1,3}.bar\z', tag: 'test.hoge.bar')
+    assert_allow_tag(conf: ['regexp1 \Atest.[0-9]{1,3}.bar\z', 'regexp2 test.1'].join("\n"), tag: 'test.1.bar')
+    assert_deny_tag(conf: ['regexp1 \Atest.[0-9]{1,3}.bar\z', 'regexp2 test.1'].join("\n"), tag: 'test.0.bar')
   end
 
   private

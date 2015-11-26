@@ -25,7 +25,7 @@ Or install it yourself as:
 <filter test.**>
   type validate_tag
   max_length 120
-  pattern \Atest.[a-z]+.baz\z
+  regexp1 \Atest.[a-z]+.baz\z
 </filter>
 ```
 
