@@ -29,6 +29,10 @@ Or install it yourself as:
 </filter>
 ```
 
+### regexpN
+You can set match patterns as regexp1, regexp2, ...
+If a tag does not match all patterns, it will be removed from queue.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
