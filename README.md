@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/adorechic/fluent-plugin-validate-tag-filter.svg)](https://travis-ci.org/adorechic/fluent-plugin-validate-tag-filter)
+
 # fluent-plugin-validate-tag-filter
 
 This plugin validates queue tags and filter them.
