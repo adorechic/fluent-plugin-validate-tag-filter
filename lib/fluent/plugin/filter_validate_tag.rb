@@ -8,9 +8,9 @@ module Fluent
       super
 
       @regexps = []
-      conf.each do |key, value|
+      conf.keys.each do |key|
         if key =~ /\Aregexp[0-9]+\z/
-          @regexps << Regexp.new(value)
+          @regexps << Regexp.new(conf[key])
         end
       end
     end
