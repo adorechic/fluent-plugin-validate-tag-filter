@@ -1,6 +1,7 @@
-module Fluent
+require 'fluent/plugin/filter'
+module Fluent::Plugin
   class ValidateTagFilter < Filter
-    Plugin.register_filter('validate_tag', self)
+    Fluent::Plugin.register_filter('validate_tag', self)
 
     config_param :max_length, :integer, default: nil
 
