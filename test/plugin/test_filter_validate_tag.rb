@@ -2,15 +2,11 @@ require 'helper'
 
 class ValidateTagFilterTest < Test::Unit::TestCase
   def setup
-    if defined?(Fluent::Filter)
-      Fluent::Test.setup
-    else
-      omit("Use Fluentd v0.12 or later.")
-    end
+    Fluent::Test.setup
   end
 
-  def create_driver(conf: '', tag: 'test')
-    Fluent::Test::FilterTestDriver.new(Fluent::ValidateTagFilter, tag).configure(conf)
+  def create_driver(conf: '')
+    Fluent::Test::Driver::Filter.new(Fluent::Plugin::ValidateTagFilter).configure(conf)
   end
 
   def test_valid_queue
@@ -34,18 +30,18 @@ class ValidateTagFilterTest < Test::Unit::TestCase
   private
 
   def assert_allow_tag(conf: '', tag: 'test')
-    d = create_driver(conf: conf, tag: tag)
-    d.run do
-      d.filter("foo" => 1)
+    d = create_driver(conf: conf)
+    d.run(default_tag: tag) do
+      d.feed("foo" => 1)
     end
-    assert_equal({ "foo" => 1 }, d.filtered_as_array[0][2])
+    assert_equal({ "foo" => 1 }, d.filtered[0][1])
   end
 
   def assert_deny_tag(conf: '', tag: 'test')
-    d = create_driver(conf: conf, tag: tag)
-    d.run do
-      d.filter("foo" => 1)
+    d = create_driver(conf: conf)
+    d.run(default_tag: tag) do
+      d.feed("foo" => 1)
     end
-    assert_equal([], d.filtered_as_array)
+    assert_equal([], d.filtered)
   end
 end
