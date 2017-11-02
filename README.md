@@ -5,6 +5,13 @@
 This plugin validates queue tags and filter them.
 Passes through valid one, deletes invalid one.
 
+## Requirements
+
+| fluent-plugin-validate-tag-filter | fluentd | ruby |
+|------------------------|---------|------|
+| >= 1.0.0 | >= v0.14.0 | >= 2.1 |
+|  < 1.0.0 | >= v0.12.0 | >= 1.9 |
+
 ## Installation
 
 Add this line to your application's Gemfile:
